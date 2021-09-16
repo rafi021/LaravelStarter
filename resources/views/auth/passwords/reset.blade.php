@@ -1,6 +1,12 @@
-@extends('layouts.app')
+@extends('auth.admin_auth_layout')
 
-@section('content')
+
+@push('auth_style')
+<link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/assets/css/forms/theme-checkbox-radio.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/assets/css/forms/switches.css">
+@endpush
+
+@section('admin_auth_content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -63,3 +69,7 @@
     </div>
 </div>
 @endsection
+
+@push('auth_script')
+
+@endpush
