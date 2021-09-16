@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Frontend/Public Panel Routes Start
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontendController::class, 'index'])->name('frontend');
 // Frontend/Public Panel Routes End
 
 
@@ -26,5 +26,5 @@ Route::get('/', function () {
 // Admin Panel Routes Start
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [DashboardController::class, 'index'])->name('home');
 // Admin Panel Routes End
