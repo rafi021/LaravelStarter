@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoleStoreRequest;
 use App\Models\Module;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -39,13 +40,14 @@ class RoleControlller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleStoreRequest $request)
     {
-        $notification = [
-            'alert_type' => 'success',
-            'message' => 'Role Created Successfully!!'
-        ];
-        return redirect()->route('roles.index')->with($notification);
+        dd($request->all());
+        // $notification = [
+        //     'alert_type' => 'success',
+        //     'message' => 'Role Created Successfully!!'
+        // ];
+        // return redirect()->route('roles.index')->with($notification);
     }
 
     /**
