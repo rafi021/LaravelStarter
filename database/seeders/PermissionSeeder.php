@@ -12,10 +12,16 @@ class PermissionSeeder extends Seeder
 
     public $adminPermissionsArray = [
         'Access Dashboard',
+    ];
+
+    public $rolePermissionArray = [
         'Access Role',
         'Create Role',
         'Edit Role',
         'Delete Role',
+    ];
+
+    public $userPermissionArray =[
         'Access User',
         'Create User',
         'Edit User',
@@ -41,15 +47,29 @@ class PermissionSeeder extends Seeder
             'permission_slug' => 'app'.'.'.Str::slug($this->adminPermissionsArray[0]),
             ]);
 
+        // Create Role Permissions
         $moduleAppRole = Module::updateOrCreate([
             'module_name' => 'Role Management',
         ]);
 
-        for ($i=1; $i<count($this->adminPermissionsArray) ; $i++) {
+        for ($i=0; $i<count($this->rolePermissionArray) ; $i++) {
         Permission::updateOrCreate([
             'module_id' => $moduleAppRole->id,
-            'permission_name' => $this->adminPermissionsArray[$i],
-            'permission_slug' => 'app'.'.'.Str::slug($this->adminPermissionsArray[$i]),
+            'permission_name' => $this->rolePermissionArray[$i],
+            'permission_slug' => 'app'.'.'.Str::slug($this->rolePermissionArray[$i]),
+            ]);
+        };
+
+        // Create User Permissions
+        $moduleAppUser = Module::updateOrCreate([
+            'module_name' => 'User Management',
+        ]);
+
+        for ($i=0; $i<count($this->userPermissionArray) ; $i++) {
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppUser->id,
+            'permission_name' => $this->userPermissionArray[$i],
+            'permission_slug' => 'app'.'.'.Str::slug($this->userPermissionArray[$i]),
             ]);
         };
 

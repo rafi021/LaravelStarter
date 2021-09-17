@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Module;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,9 @@ class RoleControlller extends Controller
      */
     public function create()
     {
-        return view('dashboard.Role.create');
+        $modules = Module::with(['permission'])->get();
+        //return $modules;
+        return view('dashboard.Role.create', compact('modules'));
     }
 
     /**

@@ -1,5 +1,9 @@
+@php
+    $prefix = Request::route()->getPrefix();
+    $route = Route::current()->getName();
+    //dd($route, $prefix);
+@endphp
 <div class="sidebar-wrapper sidebar-theme">
-
     <nav id="sidebar">
         <div class="shadow-bottom"></div>
 
@@ -36,7 +40,7 @@
                 </ul>
             </li> --}}
 
-            <li class="menu">
+            <li class="menu {{ Route::is('home') ? 'active' : '' }}">
                 <a href="{{ route('home') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns=" http://www.w3.org/2000/svg" width="24"
@@ -69,10 +73,10 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
-                    <li>
+                    <li class="{{ ($route == 'roles.index') ? 'active' : '' }}">
                         <a href="{{ route('roles.index') }}"> Roles </a>
                     </li>
-                    <li>
+                    <li class="{{ ($route == 'home') ? 'active' : '' }}">
                         <a href="javascript:void(0);"> Permissions </a>
                     </li>
                 </ul>
