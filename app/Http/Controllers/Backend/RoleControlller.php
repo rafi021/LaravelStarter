@@ -130,7 +130,7 @@ class RoleControlller extends Controller
         }else{
             $notification = [
                 'alert_type' => 'Danger',
-                'message' => "Can't Delete Role"
+                'message' => "you can't delete system role"
             ];
             notify()->error($notification['message'],$notification['alert_type'],"topRight");
             return redirect()->route('roles.index')->with($notification);
