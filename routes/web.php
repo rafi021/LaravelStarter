@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\RoleControlller;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -26,5 +27,9 @@ Route::get('/', [FrontendController::class, 'index'])->name('frontend');
 // Admin Panel Routes Start
 Auth::routes();
 
-Route::get('/home', [DashboardController::class, 'index'])->name('home');
+
+Route::middleware(['auth',])->group(function () {
+    Route::get('/home', [DashboardController::class, 'index'])->name('home');
+    Route::resource('/roles', RoleControlller::class);
+});
 // Admin Panel Routes End
