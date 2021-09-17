@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
@@ -19,6 +20,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        Gate::authorize('app.access-dashboard'); // authorize admin to access/give access to Admin Dashboard
         return view('dashboard.pages.home');
     }
 

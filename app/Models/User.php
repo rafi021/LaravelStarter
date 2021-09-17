@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function hasPermission($permission_slug)
+    {
+        return $this->role->permissions()->where('permission_slug', $permission_slug)->first() ? true : false;
+    }
 }
