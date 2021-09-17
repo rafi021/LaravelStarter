@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleStoreRequest;
+use App\Http\Requests\RoleUpdateRequest;
 use App\Models\Module;
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RoleControlller extends Controller
 {
@@ -29,7 +32,7 @@ class RoleControlller extends Controller
      */
     public function create()
     {
-        $modules = Module::with(['permission'])->get();
+        $modules = Module::with(['permissions'])->get();
         //return $modules;
         return view('dashboard.Role.create', compact('modules'));
     }
@@ -42,12 +45,21 @@ class RoleControlller extends Controller
      */
     public function store(RoleStoreRequest $request)
     {
-        dd($request->all());
-        // $notification = [
-        //     'alert_type' => 'success',
-        //     'message' => 'Role Created Successfully!!'
-        // ];
-        // return redirect()->route('roles.index')->with($notification);
+        $role = Role::updateOrCreate([
+            'role_name' => $request->input('role_name'),
+            'role_slug' => Str::slug($request->input('role_name')),
+            'role_note' => $request->input('role_name').' has limited permissions',
+            'deleteable' => true,
+        ])->permissions()->sync($request->input('permissions', []));
+
+
+        $notification = [
+            'alert_type' => 'success',
+            'message' => 'Role Created Successfully!!'
+        ];
+
+
+        return redirect()->route('roles.index')->with($notification);
     }
 
     /**
@@ -58,7 +70,7 @@ class RoleControlller extends Controller
      */
     public function show(Role $role)
     {
-        return view('dashboard.Role.show');
+
     }
 
     /**
@@ -69,7 +81,8 @@ class RoleControlller extends Controller
      */
     public function edit(Role $role)
     {
-        return view('dashboard.Role.edit', compact('role'));
+        $modules = Module::with(['permissions'])->get();
+        return view('dashboard.Role.create', compact('role', 'modules'));
     }
 
     /**
@@ -79,8 +92,17 @@ class RoleControlller extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(RoleUpdateRequest $request, Role $role)
     {
+        $role->update([
+            'role_name' => $request->input('role_name'),
+            'role_slug' => Str::slug($request->input('role_name')),
+            'role_note' => $request->input('role_name').' has limited permissions',
+            'deleteable' => true,
+        ]);
+        $role->permissions()->sync($request->input('permissions', []));
+
+
         $notification = [
             'alert_type' => 'info',
             'message' => 'Role Updated Successfully!!'

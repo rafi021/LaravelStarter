@@ -16,7 +16,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
                 <div class="statbox widget box box-shadow">
                     <div class="card-header with-border d-flex justify-content-between align-items-center">
-                        <h3 class="card-title">Create New Role </h3>
+                        <h3 class="card-title">Role Form </h3>
                         <a href="{{ route('roles.index') }}" class="btn btn-primary">Back to Role Table</a>
                     </div>
                     <div class="widget-content widget-content-area">
@@ -27,7 +27,7 @@
                             @endisset
                             <div class="form-group mb-4">
                                 <label for="roleName">Role Name</label>
-                                <input type="text" name="role_name" class="form-control @error('role_name') is-invalid @enderror" id="roleName" placeholder="e.g: Editor" value="{{ $role->name ?? old('role_name') }}" required autofocus>
+                                <input type="text" name="role_name" class="form-control @error('role_name') is-invalid @enderror" id="roleName" placeholder="e.g: Editor" value="{{ $role->role_name ?? old('role_name') }}" required autofocus>
                                 @error('role_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -35,7 +35,7 @@
                                 @enderror
                             </div>
                             <div class="text-center">
-                                <strong>Manage permission for role </strong>
+                                <strong class="@error('permissions') is-invalid @enderror">Manage permission for role </strong>
                                 @error('permissions')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -54,7 +54,7 @@
                                         @foreach ($chunks as $key=>$module)
                                         <div class="col">
                                             <h5>Module: {{ $module->module_name }}</h5>
-                                            @foreach ($module->permission as $permission )
+                                            @foreach ($module->permissions as $permission )
                                             <div class="mb-3 ml-4">
                                                 <div class="custom-control custom-checkbox mb-2" >
                                                     <input type="checkbox" class="custom-control-input"
@@ -82,7 +82,13 @@
                                 </div>
                                 @endforelse
                             </div>
-                            <button type="submit" class="btn btn-primary">Add Role</button>
+                            <button type="submit" class="btn {{ isset($role) ? 'btn-warning':'btn-primary' }}">
+                                @isset($role)
+                                    Update Role
+                                @else
+                                    Add Role
+                                @endisset
+                            </button>
                             {{-- <input type="submit" name="time" class="btn btn-primary"> --}}
                         </form>
                     </div>
