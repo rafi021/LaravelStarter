@@ -8,6 +8,7 @@
 <link href="{{ asset('dashboard/assets/css/plugins.css') }}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="{{ asset('dashboard/plugins/sweetaler2/sweetalert2.min.css') }}">
 <!-- END GLOBAL MANDATORY STYLES -->
+<link href="{{ asset('css/iziToast.css') }}" rel="stylesheet">
 
 @yield('dashoard_style')
 @stack('dashboard_style')

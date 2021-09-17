@@ -54,12 +54,12 @@ class RoleControlller extends Controller
 
 
         $notification = [
-            'alert_type' => 'success',
+            'alert_type' => 'Success',
             'message' => 'Role Created Successfully!!'
         ];
 
-
-        return redirect()->route('roles.index')->with($notification);
+        notify()->success($notification['message'],$notification['alert_type'],"topRight");
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -104,9 +104,10 @@ class RoleControlller extends Controller
 
 
         $notification = [
-            'alert_type' => 'info',
+            'alert_type' => 'Info',
             'message' => 'Role Updated Successfully!!'
         ];
+        notify()->info($notification['message'],$notification['alert_type'],"topRight");
         return redirect()->route('roles.index')->with($notification);
     }
 
@@ -121,15 +122,17 @@ class RoleControlller extends Controller
         if($role->deleteable){
             $role->delete();
             $notification = [
-                'alert_type' => 'success',
+                'alert_type' => 'Success',
                 'message' => 'Role Deleted Successfully!!'
             ];
+            notify()->success($notification['message'],$notification['alert_type'],"topRight");
             return redirect()->route('roles.index')->with($notification);
         }else{
             $notification = [
-                'alert_type' => 'danger',
+                'alert_type' => 'Danger',
                 'message' => "Can't Delete Role"
             ];
+            notify()->error($notification['message'],$notification['alert_type'],"topRight");
             return redirect()->route('roles.index')->with($notification);
         }
 
