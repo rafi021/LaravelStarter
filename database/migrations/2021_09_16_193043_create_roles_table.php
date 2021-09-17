@@ -17,7 +17,7 @@ class CreateRolesTable extends Migration
             $table->id();
             $table->string('role_name');
             $table->string('role_slug')->unique();
-            $table->text('role_note');
+            $table->text('role_note')->nullable();
             $table->boolean('deleteable')->default(true);
             $table->timestamps();
         });
