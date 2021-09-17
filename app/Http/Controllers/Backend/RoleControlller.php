@@ -9,6 +9,7 @@ use App\Models\Module;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class RoleControlller extends Controller
@@ -20,6 +21,7 @@ class RoleControlller extends Controller
      */
     public function index()
     {
+        Gate::authorize('app.access-role');
         $roles = Role::withCount(['permissions'])->with(['permissions'])->get();
         //return $roles;
         return view('dashboard.Role.index', compact('roles'));
@@ -32,6 +34,7 @@ class RoleControlller extends Controller
      */
     public function create()
     {
+        Gate::authorize('app.create-role');
         $modules = Module::with(['permissions'])->get();
         //return $modules;
         return view('dashboard.Role.create', compact('modules'));
@@ -45,6 +48,8 @@ class RoleControlller extends Controller
      */
     public function store(RoleStoreRequest $request)
     {
+        Gate::authorize('app.create-role');
+
         $role = Role::updateOrCreate([
             'role_name' => $request->input('role_name'),
             'role_slug' => Str::slug($request->input('role_name')),
@@ -70,7 +75,7 @@ class RoleControlller extends Controller
      */
     public function show(Role $role)
     {
-
+        Gate::authorize('app.access-role');
     }
 
     /**
@@ -81,6 +86,7 @@ class RoleControlller extends Controller
      */
     public function edit(Role $role)
     {
+        Gate::authorize('app.edit-role');
         $modules = Module::with(['permissions'])->get();
         return view('dashboard.Role.create', compact('role', 'modules'));
     }
@@ -94,13 +100,14 @@ class RoleControlller extends Controller
      */
     public function update(RoleUpdateRequest $request, Role $role)
     {
+        Gate::authorize('app.edit-role');
         $role->update([
             'role_name' => $request->input('role_name'),
             'role_slug' => Str::slug($request->input('role_name')),
             'role_note' => $request->input('role_name').' has limited permissions',
             'deleteable' => true,
         ]);
-        $role->permissions()->sync($request->input('permissions', []));
+        $role->permissions()->sync($request->input('permissions'));
 
 
         $notification = [
@@ -119,6 +126,7 @@ class RoleControlller extends Controller
      */
     public function destroy(Role $role)
     {
+        Gate::authorize('app.delete-role');
         if($role->deleteable){
             $role->delete();
             $notification = [
