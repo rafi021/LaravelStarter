@@ -118,11 +118,20 @@ class RoleControlller extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete();
-        $notification = [
-            'alert_type' => 'danger',
-            'message' => 'Role Deleted Successfully!!'
-        ];
-        return redirect()->route('roles.index')->with($notification);
+        if($role->deleteable){
+            $role->delete();
+            $notification = [
+                'alert_type' => 'success',
+                'message' => 'Role Deleted Successfully!!'
+            ];
+            return redirect()->route('roles.index')->with($notification);
+        }else{
+            $notification = [
+                'alert_type' => 'danger',
+                'message' => "Can't Delete Role"
+            ];
+            return redirect()->route('roles.index')->with($notification);
+        }
+
     }
 }

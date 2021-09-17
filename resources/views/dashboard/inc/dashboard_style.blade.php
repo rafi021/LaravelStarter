@@ -6,6 +6,7 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 <link href="{{ asset('dashboard/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('dashboard/assets/css/plugins.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{{ asset('dashboard/plugins/sweetaler2/sweetalert2.min.css') }}">
 <!-- END GLOBAL MANDATORY STYLES -->
 
 @yield('dashoard_style')

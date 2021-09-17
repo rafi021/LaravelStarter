@@ -91,9 +91,7 @@
                                                         </path>
                                                     </svg></a>
                                                 @if ($role->deleteable == true)
-                                                    <a href="{{ route('roles.destroy', $role) }}" data-toggle="tooltip" data-placement="top"
-                                                        title="" data-original-title="Delete" onclick="event.preventDefault();
-                                                        document.getElementById('role-deleteForm{{ $role->id }}').submit();">
+                                                    <button type="button" onclick="deleteData({{ $role->id }})">
                                                         <svg
                                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -106,8 +104,8 @@
                                                             <line x1="10" y1="11" x2="10" y2="17"></line>
                                                             <line x1="14" y1="11" x2="14" y2="17"></line>
                                                         </svg>
-                                                    </a>
-                                                    <form id="role-deleteForm{{ $role->id }}" action="{{ route('roles.destroy', $role) }}" method="POST" class="d-none">
+                                                    </button>
+                                                    <form id="role-delete-form-{{ $role->id }}" action="{{ route('roles.destroy', $role) }}" method="POST" class="d-none">
                                                         @csrf
                                                         @method('DELETE')
                                                     </form>
