@@ -4,14 +4,11 @@
 I Am Home Style
 @endpush
 
-@section('dashboard_breadcrumb')
-<nav class="breadcrumb-one" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="javascript:void(0);">Starter Kit</a></li>
-        <li class="breadcrumb-item active" aria-current="page"><span>Breadcrumbs</span></li>
-    </ol>
-</nav>
-@endsection
+@include('dashboard.inc.dashboard_breadcrumb', [
+    'name' => 'Dashboard',
+    'route_name' => 'home',
+    'section_name' => 'Sales'
+])
 
 @section('dashboard_content')
     <div class="layout-px-spacing">
