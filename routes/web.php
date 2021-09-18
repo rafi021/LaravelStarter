@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\RoleControlller;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -31,5 +32,6 @@ Auth::routes();
 Route::middleware(['auth',])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::resource('/roles', RoleControlller::class);
+    Route::resource('/users', UserController::class);
 });
 // Admin Panel Routes End

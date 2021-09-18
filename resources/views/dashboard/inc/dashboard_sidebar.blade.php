@@ -76,8 +76,8 @@
                     <li class="{{ ($route == 'roles.index') ? 'active' : '' }}">
                         <a href="{{ route('roles.index') }}"> Roles </a>
                     </li>
-                    <li class="{{ ($route == 'home') ? 'active' : '' }}">
-                        <a href="javascript:void(0);"> Permissions </a>
+                    <li class="{{ ($route == 'users.index') ? 'active' : '' }}">
+                        <a href="{{ route('users.index') }}"> Users </a>
                     </li>
                 </ul>
             </li>

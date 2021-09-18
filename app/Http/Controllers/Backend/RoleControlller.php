@@ -9,6 +9,7 @@ use App\Models\Module;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
@@ -22,9 +23,11 @@ class RoleControlller extends Controller
     public function index()
     {
         Gate::authorize('app.access-role');
+        $canedit = Auth::user()->hasPermission('app.edit-user');
+        $candelete = Auth::user()->hasPermission('app.delete-user');
         $roles = Role::withCount(['permissions'])->with(['permissions'])->get();
         //return $roles;
-        return view('dashboard.Role.index', compact('roles'));
+        return view('dashboard.Role.index', compact('roles', 'canedit','candelete'));
     }
 
     /**

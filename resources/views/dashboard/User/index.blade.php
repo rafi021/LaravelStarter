@@ -19,8 +19,8 @@
         <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
                 <div class="card-header with-border d-flex justify-content-between align-items-center">
-                    <h3 class="card-title">Role Table</h3>
-                    <a href="{{ route('roles.create') }}" class="btn btn-primary">Create New Role</a>
+                    <h3 class="card-title">User Table</h3>
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">Create New User</a>
                 </div>
                 <div class="widget-content widget-content-area br-6">
                     <div id="html5-extension_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
@@ -34,36 +34,64 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table id="html5-extension" class="table table-hover non-hover dataTable no-footer"
-                                style="width: 100%;" role="grid" aria-describedby="html5-extension_info">
+                            <table id="userTable" class="table table-hover non-hover dataTable no-footer"
+                                style="width: 100%;" role="grid" aria-describedby="userTable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting_asc" tabindex="0" aria-controls="userTable" rowspan="1"
                                             colspan="1" aria-sort="ascending"
                                             aria-label="Name: activate to sort column descending" style="width: 170px;">#
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
-                                            style="width: 250px;">Role Name</th>
+                                            style="width: 150px;">Image</th>
                                         <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
-                                            colspan="1" aria-label="Office: activate to sort column ascending"
-                                            style="width: 126px;">Permissions</th>
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 150px;">User Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 150px;">User Email</th>
                                         <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
                                             colspan="1" aria-label="Age: activate to sort column ascending"
-                                            style="width: 66px;">Created At</th>
+                                            style="width: 66px;">Joined At</th>
+                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                            colspan="1" aria-label="Age: activate to sort column ascending"
+                                            style="width: 66px;">Status</th>
                                         <th class="dt-no-sorting sorting" tabindex="0" aria-controls="html5-extension"
                                             rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
                                             style="width:126px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($roles as $key => $role)
+                                    @foreach ($users as $key => $user)
                                         <tr role="row">
                                             <td class="sorting_1">{{ $loop->index + 1 }}</td>
-                                            <td>{{ $role->role_name }}</td>
                                             <td>
-                                                @if ($role->permissions_count > 0)
-                                                @foreach ($role->permissions as $key => $permission)
+                                                <div class="widget-content p-0">
+                                                    <div class="widget-content-wrapper">
+                                                        <div class="widget-content-left mr-3">
+                                                            <div class="widget-content-left">
+                                                                <img src="{{ config('app.placeholder').'160.png' }}" alt="User Avatar" width="40">
+                                                            </div>
+                                                        </div>
+                                                        <div class="widget-content-left flex2">
+                                                            <div class="widget-heading">{{ $user->name }}</div>
+                                                            <div class="widget-subheading opacity-7">
+                                                                @if ($user->role)
+                                                                <span class="badge badge-info">{{ $user->role->role_name }}</span>
+                                                                @else
+                                                                <span class="badge badge-danger">No role found !!</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            {{-- <td>
+                                                @if ($user->role->permissions->count() > 0)
+                                                @foreach ($user->role->permissions as $key => $permission)
                                                 <span
                                                     class="badge badge-success">{{ $permission->permission_name }}
                                                 </span>
@@ -72,17 +100,23 @@
                                                 <span class="badge badge-info"> No permission found yet!
                                                 </span>
                                                 @endif
+                                            </td> --}}
+                                            <td>
+                                                {{ $user->created_at->diffForHumans() }}
                                             </td>
                                             <td>
-                                                {{ $role->updated_at->diffForHumans() }}
+                                                @if ($user->status)
+                                                <span class="badge badge-success">Active</span>
+                                                @else
+                                                <span class="badge badge-danger">Inactive</span>
+                                                @endif
                                             </td>
                                             <td>
                                                 {{-- <a href="{{ route('roles.show', $role) }}" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Settings">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-primary"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                 </a> --}}
-                                                @if ($canedit)
-                                                <a href="{{ route('roles.edit', $role) }}" data-toggle="tooltip" data-placement="top"
+                                                <a href="{{ route('users.edit', $user) }}" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Edit"><svg
                                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -92,9 +126,8 @@
                                                         </path>
                                                     </svg>
                                                 </a>
-                                                @endif
-                                                @if ($role->deleteable == true && $candelete)
-                                                    <button type="button" onclick="deleteData({{ $role->id }})">
+                                                @if ($user->role->deleteable == true)
+                                                    <button type="button" onclick="deleteData({{ $user->id }})">
                                                         <svg
                                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -108,7 +141,7 @@
                                                             <line x1="14" y1="11" x2="14" y2="17"></line>
                                                         </svg>
                                                     </button>
-                                                    <form id="role-delete-form-{{ $role->id }}" action="{{ route('roles.destroy', $role) }}" method="POST" class="d-none">
+                                                    <form id="role-delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user) }}" method="POST" class="d-none">
                                                         @csrf
                                                         @method('DELETE')
                                                     </form>
