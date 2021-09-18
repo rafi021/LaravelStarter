@@ -60,6 +60,13 @@ class UserController extends Controller
             'password' => Hash::make($request->input('password')),
             'status' => $request->filled('status'),
         ]);
+
+
+        // Check if file exits (Image Upload)
+        if($request->hasFile('avatar')){
+            $user->addMedia($request->avatar)->toMediaCollection('avatar');
+        }
+
         $notification = [
             'alert_type' => 'Success',
             'message' => 'User Created Successfully!!'
