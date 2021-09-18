@@ -46,7 +46,9 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    public function registerMediaCollections(){
+    
+    public function registerMediaCollections():void
+    {
         $this->addMediaCollection('avatar')
             ->singleFile();
     }
