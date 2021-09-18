@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserStoreRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -35,7 +38,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('app.create-user');
+        $roles = Role::all();
+        return view('dashboard.User.create', compact('roles'));
     }
 
     /**
@@ -44,9 +49,23 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        Gate::authorize('app.create-user');
+        //dd($request->all());
+        $user = User::create([
+            'role_id' => $request->role_name,
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'status' => $request->filled('status'),
+        ]);
+        $notification = [
+            'alert_type' => 'Success',
+            'message' => 'User Created Successfully!!'
+        ];
+        notify()->success($notification['message'],$notification['alert_type'],"topRight");
+        return redirect()->route('users.index')->with($notification);
     }
 
     /**
@@ -91,6 +110,22 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return $user;
+        Gate::authorize('app.delete-user');
+        if($user->role->deleteable){
+            $user->delete();
+            $notification = [
+                'alert_type' => 'Success',
+                'message' => 'User Deleted Successfully!!'
+            ];
+            notify()->success($notification['message'],$notification['alert_type'],"topRight");
+            return redirect()->route('users.index')->with($notification);
+        }else{
+            $notification = [
+                'alert_type' => 'Danger',
+                'message' => "you can't delete system User"
+            ];
+            notify()->error($notification['message'],$notification['alert_type'],"topRight");
+            return redirect()->route('users.index')->with($notification);
+        }
     }
 }

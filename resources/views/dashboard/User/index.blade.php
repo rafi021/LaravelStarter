@@ -11,7 +11,7 @@
 @include('dashboard.inc.dashboard_breadcrumb', [
 'name' => 'Dashboard',
 'route_name' => 'home',
-'section_name' => 'Roles'
+'section_name' => 'Users'
 ])
 
 @section('dashboard_content')
