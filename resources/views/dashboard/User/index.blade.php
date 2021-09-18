@@ -71,7 +71,9 @@
                                                     <div class="widget-content-wrapper">
                                                         <div class="widget-content-left mr-3">
                                                             <div class="widget-content-left">
-                                                                <img src="{{ config('app.placeholder').'160.png' }}" alt="User Avatar" width="40">
+                                                                <img src="{{ $user->getFirstMediaUrl('avatar')!= null ?
+                                                                $user->getFirstMediaUrl('avatar') :
+                                                                config('app.placeholder').'160.png' }}" alt="User Avatar" width="40">
                                                             </div>
                                                         </div>
                                                         <div class="widget-content-left flex2">
