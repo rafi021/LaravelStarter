@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +18,7 @@ class BackupController extends Controller
      */
     public function index()
     {
-        //Gate::authorize('app.backup-index');
+        Gate::authorize('app.backup-index');
         $disk = Storage::disk(config('backup.backup.destination.disks')[0]);  //local
         $files = $disk->files(config('backup.backup.name')); //env(APP_NAME)
 
@@ -77,7 +78,12 @@ class BackupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('app.backup-create');
+        // start the backup process
+        Artisan::call('backup:run');
+
+        notify()->success('Backup Created', 'Success');
+        return back();
     }
 
     /**
@@ -120,8 +126,17 @@ class BackupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($file_name)
     {
-        //
+        Gate::authorize('app.backup-delete');
+        $disk = Storage::disk(config('backup.backup.destination.disks')[0]);  //local
+        $files = $disk->files(config('backup.backup.name')); //env(APP_NAME)
+
+        if($disk->exists(config('backup.backup.name').'/'.$file_name)){
+            $disk->delete(config('backup.backup.name').'/'.$file_name);
+
+            notify()->success('Backup Delete', 'Success');
+            return back();
+        }
     }
 }

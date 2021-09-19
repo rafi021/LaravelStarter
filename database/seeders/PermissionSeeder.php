@@ -29,10 +29,10 @@ class PermissionSeeder extends Seeder
     ];
 
     public $backPermissionArry = [
-        'Backend Index',
-        'Backend Create',
-        'Backend Download',
-        'Backend Delete',
+        'Backup Index',
+        'Backup Create',
+        'Backup Download',
+        'Backup Delete',
     ];
 
     /**

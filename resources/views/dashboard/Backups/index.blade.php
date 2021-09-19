@@ -20,7 +20,13 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
                 <div class="card-header with-border d-flex justify-content-between align-items-center">
                     <h3 class="card-title">Backup Table</h3>
-                    <a href="#" class="btn btn-primary">Create New Backup</a>
+                    <button type="button" class="btn btn-primary"
+                    onclick="event.preventDefault();
+                    document.getElementById('new-backup-form').submit();"
+                    >Create New Backup</button>
+                    <form id="new-backup-form" action="{{ route('backups.store') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
                 <div class="widget-content widget-content-area br-6">
                     <div id="html5-extension_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
