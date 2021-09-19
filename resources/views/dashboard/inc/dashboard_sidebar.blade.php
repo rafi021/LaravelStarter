@@ -101,8 +101,8 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="submenu2" data-parent="#accordionExample">
-                    <li>
-                        <a href="javascript:void(0);"> Submenu 1 </a>
+                    <li class="{{ Request::is('/admin/backups*') ? 'active' : '' }}">
+                        <a href="{{ route('backups.index') }}">Backups</a>
                     </li>
                     <li>
                         <a href="#sm2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -112,9 +112,6 @@
                                 <polyline points="9 18 15 12 9 6"></polyline>
                             </svg> </a>
                         <ul class="collapse list-unstyled sub-submenu" id="sm2" data-parent="#submenu2">
-                            <li>
-                                <a href="javascript:void(0);"> Sub-Submenu 1 </a>
-                            </li>
                             <li>
                                 <a href="javascript:void(0);"> Sub-Submenu 2 </a>
                             </li>

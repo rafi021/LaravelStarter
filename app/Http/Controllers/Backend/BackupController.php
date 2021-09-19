@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class BackupController extends Controller
 {
@@ -14,7 +17,46 @@ class BackupController extends Controller
      */
     public function index()
     {
-        //
+        //Gate::authorize('app.backup-index');
+        $disk = Storage::disk(config('backup.backup.destination.disks')[0]);  //local
+        $files = $disk->files(config('backup.backup.name')); //env(APP_NAME)
+
+        $backups = [];
+        // Make an array of backup files with their filesize and creation date.
+        foreach ($files as $key => $file) {
+            // only take the .zip file
+            if(substr($file, -4) == '.zip' && $disk->exists($file)){
+                $file_name = str_replace(config('backup.backup.name') . '/', '', $file);
+                $backups[]=[
+                    'file_path' => $file,
+                    'file_name' => $file_name,
+                    'file_size' => $this->byteToHuman($disk->size($file)),
+                    'created_at' => Carbon::parse($disk->lastModified($file))->diffForHumans(),
+                    'download_link' => '#',
+                ];
+            }
+        }
+
+        // reverse the backups, so that newest one would be on top
+        $backups = array_reverse($backups);
+
+        return view('dashboard.Backups.index', compact('backups'));
+    }
+
+    /*
+    * Convert bytes to human readable
+    * @param $bytes
+    * @return string
+    */
+    private function byteToHuman($bytes)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+        for($i=0;$bytes>1024; $i++){
+            $bytes/=1024;
+        }
+
+        return round($bytes, 2).' '.$units[$i];
     }
 
     /**
