@@ -112,6 +112,20 @@ class BackupController extends Controller
     }
 
     /**
+     * Clean all old backups
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function clean()
+    {
+        Gate::authorize('app.backup-delete');
+        // start the backup process
+        Artisan::call('backup:clean');
+
+        notify()->success('All Old Backups Successfully Deleted.', 'Added');
+        return back();
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

@@ -36,5 +36,6 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::resource('/users', UserController::class);
     Route::resource('/backups', BackupController::class)->only(['index','store','destroy']);
     Route::get('/backups/{file_name}', [BackupController::class, 'download'])->name('backups.download');
+    Route::delete('/backup/clean', [BackupController::class, 'clean'])->name('backups.clean');
 });
 // Admin Panel Routes End

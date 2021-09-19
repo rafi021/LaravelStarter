@@ -27,6 +27,21 @@
                     <form id="new-backup-form" action="{{ route('backups.store') }}" method="POST" class="d-none">
                         @csrf
                     </form>
+
+                    <div class="d-inline-block">
+                        <button onclick="event.preventDefault();
+                          document.getElementById('clean-old-backups').submit();"
+                            class="btn-shadow btn btn-danger">
+                        <span class="btn-icon-wrapper pr-2 opacity-7">
+                            <i class="fas fa-trash fa-w-20"></i>
+                        </span>
+                        {{ __('Clean Old Backups') }}
+                    </button>
+                    <form id="clean-old-backups" action="{{ route('backups.clean') }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                    </div>
                 </div>
                 <div class="widget-content widget-content-area br-6">
                     <div id="html5-extension_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
