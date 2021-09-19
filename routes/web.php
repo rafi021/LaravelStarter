@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\RoleControlller;
+use App\Http\Controllers\Backend\TodoController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\HomeController;
@@ -43,13 +44,13 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::get('/backups/{file_name}', [BackupController::class, 'download'])->name('backups.download');
     Route::delete('/backup/clean', [BackupController::class, 'clean'])->name('backups.clean');
 
-    // Profile Routes
+    // Profile & Password Routes
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
-
     Route::get('/profile/security', [ProfileController::class, 'changePassword'])->name('profle.password.change');
     Route::put('/profile/security/{user}', [ProfileController::class, 'updatePassword'])->name('profle.password.update');
 
-
+    //To-Do routes
+    Route::resource('/todos', TodoController::class);
 });
 // Admin Panel Routes End
