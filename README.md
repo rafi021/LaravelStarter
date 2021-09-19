@@ -21,3 +21,13 @@ Its a Laravel 8 based starter project to quick start development. Build With
 
 For Debuging. I use
 1. barryvdh/laravel-debugbar: "^3.6"
+
+## Features List
+1. Role Management
+2. Permission Management
+3. User Management
+4. Profile Management
+5. Backend DB and Project File from Admin Dashboard
+6. Event Management
+7. TO-Do List Management 
+8. Note Management 
