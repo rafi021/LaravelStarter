@@ -28,6 +28,13 @@ class PermissionSeeder extends Seeder
         'Delete User',
     ];
 
+    public $backPermissionArry = [
+        'Backend Index',
+        'Backend Create',
+        'Backend Download',
+        'Backend Delete',
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -70,6 +77,19 @@ class PermissionSeeder extends Seeder
             'module_id' => $moduleAppUser->id,
             'permission_name' => $this->userPermissionArray[$i],
             'permission_slug' => 'app'.'.'.Str::slug($this->userPermissionArray[$i]),
+            ]);
+        };
+
+        // Create Backup Permissions
+        $moduleAppBackup = Module::updateOrCreate([
+            'module_name' => 'Backup Management',
+        ]);
+
+        for ($i=0; $i<count($this->backPermissionArry) ; $i++) {
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppBackup->id,
+            'permission_name' => $this->backPermissionArry[$i],
+            'permission_slug' => 'app'.'.'.Str::slug($this->backPermissionArry[$i]),
             ]);
         };
 

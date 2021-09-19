@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\RoleControlller;
 use App\Http\Controllers\Backend\UserController;
@@ -29,9 +30,10 @@ Route::get('/', [FrontendController::class, 'index'])->name('frontend');
 Auth::routes();
 
 
-Route::middleware(['auth',])->group(function () {
+Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::resource('/roles', RoleControlller::class);
     Route::resource('/users', UserController::class);
+    Route::resource('/backups', BackupController::class)->only(['index','store','destroy']);
 });
 // Admin Panel Routes End
