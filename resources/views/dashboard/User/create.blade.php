@@ -56,7 +56,7 @@
                                     <label for="userPassword">User Password</label>
                                     <input type="password" name="password"
                                         class="form-control @error('password') is-invalid @enderror" id="userPassword"
-                                        placeholder="e.g: Password" required>
+                                        placeholder="e.g: Password" {{ !isset($user) ? 'required' : '' }}>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -67,7 +67,7 @@
                                     <label for="confirmPassword">Confirm Password</label>
                                     <input type="password" name="password_confirmation"
                                         class="form-control @error('password') is-invalid @enderror" id="confirmPassword"
-                                        placeholder="e.g: Password" required>
+                                        placeholder="e.g: Password" {{ !isset($user) ? 'required' : '' }}>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -84,9 +84,11 @@
                                             <select
                                                 class="custom-select roleSelect @error('role_name') is-invalid @enderror"
                                                 name="role_name" id="roleSelet">
-                                                <option selected>Select one</option>
-                                                @foreach ($roles as $key => $item)
-                                                    <option value="{{ $item->id }}">{{ $item->role_name }}</option>
+                                                @foreach ($roles as $key => $role)
+                                                    <option value="{{ $role->id }}" @isset($user) {{ $user->role->id == $role->id ? 'selected': '' }}
+                                                        @endisset>
+                                                        {{ $role->role_name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             @error('role_name')
@@ -99,8 +101,8 @@
                                             <label for="userAvatar">Avatar</label>
                                             <input type="file" name="avatar" id="userAvatar"
                                                 class="dropify form-control @error('avatar') is-invalid
-                                            @enderror"
-                                                required>
+                                            @enderror" data-default-file="{{ isset($user) ? $user->getFirstMediaUrl('avatar') : ''}}"
+                                            {{ !isset($user) ? 'required' : '' }}>
                                             @error('avatar')
                                                 <span class="text-danger" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -112,7 +114,11 @@
                                                 <input type="checkbox"
                                                     class="custom-control-input @error('status')is-invalid
                                             @enderror"
-                                                    id="customSwitch1" name="status">
+                                                    id="customSwitch1" name="status"
+                                                    @isset($user)
+                                                    {{ $user->status == true ? 'checked': '' }}
+                                                    @endisset
+                                                    >
                                                 <label class="custom-control-label" for="customSwitch1">User Status</label>
                                                 @error('status')
                                                     <span class="invalid-feedback" role="alert">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -94,7 +95,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        Gate::authorize('app.edit-user');
+        $roles = Role::all();
+        return view('dashboard.User.create',compact('user', 'roles'));
     }
 
     /**
@@ -104,9 +107,30 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        Gate::authorize('app.edit-user');
+        //dd($request->all());
+        $user->update([
+            'role_id' => $request->role_name,
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => isset($request->password) ? Hash::make($request->input('password')) : $user->password,
+            'status' => $request->filled('status'),
+        ]);
+
+
+        // Check if file exits (Image Upload)
+        if($request->hasFile('avatar')){
+            $user->addMedia($request->avatar)->toMediaCollection('avatar');
+        }
+
+        $notification = [
+            'alert_type' => 'Success',
+            'message' => 'User Updated Successfully!!'
+        ];
+        notify()->info($notification['message'],$notification['alert_type'],"topRight");
+        return back()->with($notification);
     }
 
     /**
