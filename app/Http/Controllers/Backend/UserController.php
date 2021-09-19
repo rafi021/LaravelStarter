@@ -84,7 +84,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        Gate::authorize('app.access-user');
+        return view('dashboard.User.show', compact("user"));
     }
 
     /**
