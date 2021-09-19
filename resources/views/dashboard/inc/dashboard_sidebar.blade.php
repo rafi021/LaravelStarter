@@ -101,7 +101,7 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="submenu2" data-parent="#accordionExample">
-                    <li class="{{ Request::is('/admin/backups*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('admin/backups*') ? 'active' : '' }}">
                         <a href="{{ route('backups.index') }}">Backups</a>
                     </li>
                     <li>

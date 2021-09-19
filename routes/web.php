@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\RoleControlller;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -32,10 +33,18 @@ Auth::routes();
 
 Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
+
+    // Role and Users Routes
     Route::resource('/roles', RoleControlller::class);
     Route::resource('/users', UserController::class);
+
+    // Database & Project Backup Routes
     Route::resource('/backups', BackupController::class)->only(['index','store','destroy']);
     Route::get('/backups/{file_name}', [BackupController::class, 'download'])->name('backups.download');
     Route::delete('/backup/clean', [BackupController::class, 'clean'])->name('backups.clean');
+
+    // Profile Routes
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 });
 // Admin Panel Routes End
