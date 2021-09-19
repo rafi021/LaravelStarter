@@ -46,5 +46,10 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/profile/security', [ProfileController::class, 'changePassword'])->name('profle.password.change');
+    Route::put('/profile/security/{user}', [ProfileController::class, 'updatePassword'])->name('profle.password.update');
+
+
 });
 // Admin Panel Routes End

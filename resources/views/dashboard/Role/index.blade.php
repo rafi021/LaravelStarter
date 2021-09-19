@@ -63,10 +63,12 @@
                                             <td>{{ $role->role_name }}</td>
                                             <td>
                                                 @if ($role->permissions_count > 0)
-                                                @foreach ($role->permissions as $key => $permission)
-                                                <span
-                                                    class="badge badge-success">{{ $permission->permission_name }}
-                                                </span>
+                                                @foreach ($role->permissions->chunk(5) as $key => $chunks)
+                                                    <div class="row">
+                                                @foreach ($chunks as $permission)
+                                                    <span class="badge badge-success">{{ $permission->permission_name }}</span>
+                                                @endforeach
+                                                </div>
                                                 @endforeach
                                                 @else
                                                 <span class="badge badge-info"> No permission found yet!

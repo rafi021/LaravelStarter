@@ -35,6 +35,12 @@ class PermissionSeeder extends Seeder
         'Backup Delete',
     ];
 
+    public $profilePermissionArray = [
+        'Profile Index',
+        'Profile Update',
+        'Password Show',
+        'Password Update',
+    ];
     /**
      * Run the database seeds.
      *
@@ -92,6 +98,20 @@ class PermissionSeeder extends Seeder
             'permission_slug' => 'app'.'.'.Str::slug($this->backPermissionArry[$i]),
             ]);
         };
+
+        // Create Profile Permissions
+        $moduleAppProfile = Module::updateOrCreate([
+            'module_name' => 'Profile Management',
+        ]);
+
+        for ($i=0; $i<count($this->profilePermissionArray) ; $i++) {
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppProfile->id,
+            'permission_name' => $this->profilePermissionArray[$i],
+            'permission_slug' => 'app'.'.'.Str::slug($this->profilePermissionArray[$i]),
+            ]);
+        };
+
 
     }
 }
