@@ -21,5 +21,12 @@ class Page extends Model implements HasMedia
         'meta_title',
         'meta_keywords',
         'meta_description',
+        'status'
     ];
+
+    public function registerMediaCollections():void
+    {
+        $this->addMediaCollection('page_image')
+            ->singleFile();
+    }
 }
