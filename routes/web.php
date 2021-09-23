@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\RoleControlller;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\PageController as FrontendPageController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,8 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
 
     // Pages
     Route::resource('pages', PageController::class);
-
 });
 // Admin Panel Routes End
+
+// Always add to last route
+Route::get('{slug}',[FrontendPageController::class, 'index']);
