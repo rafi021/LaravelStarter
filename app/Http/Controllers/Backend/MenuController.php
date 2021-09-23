@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MenuController extends Controller
 {
@@ -15,7 +16,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        Gate::authorize('app.menu-index');
+        $menus = Menu::latest('id')->get();
+        return view('dashboard.Menus.index', compact('menus'));
     }
 
     /**
@@ -25,7 +28,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('app.menu-create');
+        return view('dashboard.Menus.create');
     }
 
     /**

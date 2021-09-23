@@ -9,6 +9,8 @@ class MenuItem extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function menu()
     {
         return $this->belongsTo(Menu::class);

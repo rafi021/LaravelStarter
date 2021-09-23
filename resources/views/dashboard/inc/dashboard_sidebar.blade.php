@@ -107,6 +107,9 @@
                     <li class="{{ Request::is('admin/pages*') ? 'active' : '' }}">
                         <a href="{{ route('pages.index') }}">Page Builder</a>
                     </li>
+                    <li class="{{ Request::is('admin/menus*') ? 'active' : '' }}">
+                        <a href="{{ route('menus.index') }}">Menus</a>
+                    </li>
                     <li>
                         <a href="#sm2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             Submenu 2 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

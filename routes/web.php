@@ -57,7 +57,7 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::resource('pages', PageController::class);
 
     //Menus routes
-    Route::resource('menus', MenuController::class);
+    Route::resource('menus', MenuController::class)->except('show');
 });
 // Admin Panel Routes End
 
