@@ -34,24 +34,24 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table id="html5-extension" class="table table-hover non-hover dataTable no-footer"
-                                style="width: 100%;" role="grid" aria-describedby="html5-extension_info">
+                            <table id="roleTable" class="table table-hover non-hover dataTable no-footer"
+                                style="width: 100%;" role="grid" aria-describedby="roleTable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting_asc" tabindex="0" aria-controls="roleTable" rowspan="1"
                                             colspan="1" aria-sort="ascending"
                                             aria-label="Name: activate to sort column descending" style="width: 170px;">#
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="roleTable" rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
                                             style="width: 250px;">Role Name</th>
-                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="roleTable" rowspan="1"
                                             colspan="1" aria-label="Office: activate to sort column ascending"
                                             style="width: 126px;">Permissions</th>
-                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="roleTable" rowspan="1"
                                             colspan="1" aria-label="Age: activate to sort column ascending"
                                             style="width: 66px;">Created At</th>
-                                        <th class="dt-no-sorting sorting" tabindex="0" aria-controls="html5-extension"
+                                        <th class="dt-no-sorting sorting" tabindex="0" aria-controls="roleTable"
                                             rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
                                             style="width:126px;">Action</th>
                                     </tr>
@@ -141,7 +141,7 @@
     <script src="{{ asset('dashboard') }}/plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="{{ asset('dashboard') }}/plugins/table/datatable/button-ext/buttons.print.min.js"></script>
     <script>
-        $('#html5-extension').DataTable({
+        $('#roleTable').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
                 "<'table-responsive'tr>" +
                 "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",

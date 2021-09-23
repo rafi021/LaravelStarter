@@ -11,7 +11,7 @@
 @include('dashboard.inc.dashboard_breadcrumb', [
 'name' => 'Dashboard',
 'route_name' => 'home',
-'section_name' => 'Backup'
+'section_name' => 'Page Builder'
 ])
 
 @section('dashboard_content')
@@ -19,32 +19,11 @@
         <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
                 <div class="card-header with-border d-flex justify-content-between align-items-center">
-                    <h3 class="card-title">Backup Table</h3>
-                    <button type="button" class="btn btn-primary"
-                    onclick="event.preventDefault();
-                    document.getElementById('new-backup-form').submit();"
-                    >Create New Backup</button>
-                    <form id="new-backup-form" action="{{ route('backups.store') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-
-                    <div class="d-inline-block">
-                        <button onclick="event.preventDefault();
-                          document.getElementById('clean-old-backups').submit();"
-                            class="btn-shadow btn btn-danger">
-                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                            <i class="fas fa-trash fa-w-20"></i>
-                        </span>
-                        {{ __('Clean Old Backups') }}
-                    </button>
-                    <form id="clean-old-backups" action="{{ route('backups.clean') }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                    </div>
+                    <h3 class="card-title">Pager Table</h3>
+                    <a href="{{ route('pages.create') }}" class="btn btn-primary">Create New Page</a>
                 </div>
                 <div class="widget-content widget-content-area br-6">
-                    <div id="backupTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div id="html5-extension_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                         <div class="dt--top-section">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center">
@@ -55,46 +34,68 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table id="backupTable" class="table table-hover non-hover dataTable no-footer"
-                                style="width: 100%;" role="grid" aria-describedby="backupTable_info">
+                            <table id="pageTable" class="table table-hover non-hover dataTable no-footer"
+                                style="width: 100%;" role="grid" aria-describedby="pageTable_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="backupTable" rowspan="1"
+                                        <th class="sorting_asc" tabindex="0" aria-controls="pageTable" rowspan="1"
                                             colspan="1" aria-sort="ascending"
                                             aria-label="Name: activate to sort column descending" style="width: 170px;">#
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="backupTable" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
-                                            style="width: 250px;">File Name</th>
-                                        <th class="sorting" tabindex="0" aria-controls="backupTable" rowspan="1"
-                                            colspan="1" aria-label="Office: activate to sort column ascending"
-                                            style="width: 126px;">Size</th>
-                                        <th class="sorting" tabindex="0" aria-controls="backupTable" rowspan="1"
+                                            style="width: 150px;">Page title</th>
+                                            <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 150px;">URL</th>
+                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 150px;">Meta Title</th>
+                                            <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
                                             colspan="1" aria-label="Age: activate to sort column ascending"
-                                            style="width: 66px;">Created At</th>
-                                        <th class="dt-no-sorting sorting" tabindex="0" aria-controls="backupTable"
+                                            style="width: 66px;">Meta Keywords</th>
+                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                            colspan="1" aria-label="Age: activate to sort column ascending"
+                                            style="width: 66px;">Status</th>
+                                        <th class="dt-no-sorting sorting" tabindex="0" aria-controls="html5-extension"
                                             rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
                                             style="width:126px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($backups as $key => $backup)
+                                    @foreach ($pages as $key => $page)
                                         <tr role="row">
                                             <td class="sorting_1">{{ $loop->index + 1 }}</td>
+                                            <td>{{ $page->page_title }}</td>
                                             <td>
-                                                <code>
-                                                    {{ $backup['file_name'] }}
-                                                </code>
+                                                <a href="">{{ $page->page_slug }}</a>
                                             </td>
-                                            <td>{{ $backup['file_size'] }}</td>
-                                            <td>{{ $backup['created_at']}}</td>
+                                            <td>{{ $page->meta_title }}</td>
+                                            <td>{{ $page->meta_keywords }}</td>
                                             <td>
-                                                <a href="{{ route('backups.download', $backup['file_name']) }}" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Download">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+                                                @if ($page->status)
+                                                <span class="badge badge-success">Active</span>
+                                                @else
+                                                <span class="badge badge-danger">Inactive</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('pages.show', $page) }}" data-toggle="tooltip" data-placement="top"
+                                                    title="" data-original-title="Settings">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-primary"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                </a>
+                                                <a href="{{ route('pages.edit', $page) }}" data-toggle="tooltip" data-placement="top"
+                                                    title="" data-original-title="Edit"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-edit-2 text-success">
+                                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+                                                        </path>
+                                                    </svg>
                                                 </a>
                                                 @if (true)
-                                                    <button type="button" onclick="deleteData({{ $key }})">
+                                                    <button type="button" onclick="deleteData({{ $page->id }})">
                                                         <svg
                                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -108,7 +109,7 @@
                                                             <line x1="14" y1="11" x2="14" y2="17"></line>
                                                         </svg>
                                                     </button>
-                                                    <form id="role-delete-form-{{ $key }}" action="{{ route('backups.destroy', $backup['file_name']) }}" method="POST" class="d-none">
+                                                    <form id="role-delete-form-{{ $page->id }}" action="{{ route('pages.destroy', $page) }}" method="POST" class="d-none">
                                                         @csrf
                                                         @method('DELETE')
                                                     </form>
@@ -139,7 +140,7 @@
     <script src="{{ asset('dashboard') }}/plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="{{ asset('dashboard') }}/plugins/table/datatable/button-ext/buttons.print.min.js"></script>
     <script>
-        $('#backupTable').DataTable({
+        $('#pageTable').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
                 "<'table-responsive'tr>" +
                 "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",

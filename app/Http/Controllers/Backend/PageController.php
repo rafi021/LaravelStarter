@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PageController extends Controller
 {
@@ -15,7 +16,11 @@ class PageController extends Controller
      */
     public function index()
     {
-        //
+        Gate::authorize('app.page-index');
+        $pages = Page::latest('id')->get();
+        return view('dashboard.PageBuilder.index', compact(
+            'pages',
+        ));
     }
 
     /**
@@ -25,7 +30,8 @@ class PageController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('app.page-index');
+        return view('dashboard.PageBuilder.create');
     }
 
     /**

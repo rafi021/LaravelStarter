@@ -23,7 +23,7 @@
                     <a href="{{ route('users.create') }}" class="btn btn-primary">Create New User</a>
                 </div>
                 <div class="widget-content widget-content-area br-6">
-                    <div id="html5-extension_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div id="userTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                         <div class="dt--top-section">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center">
@@ -42,22 +42,22 @@
                                             colspan="1" aria-sort="ascending"
                                             aria-label="Name: activate to sort column descending" style="width: 170px;">#
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="userTable" rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
                                             style="width: 150px;">Image</th>
-                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="userTable" rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
                                             style="width: 150px;">User Name</th>
-                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="userTable" rowspan="1"
                                             colspan="1" aria-label="Position: activate to sort column ascending"
                                             style="width: 150px;">User Email</th>
-                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="userTable" rowspan="1"
                                             colspan="1" aria-label="Age: activate to sort column ascending"
                                             style="width: 66px;">Joined At</th>
-                                        <th class="sorting" tabindex="0" aria-controls="html5-extension" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="userTable" rowspan="1"
                                             colspan="1" aria-label="Age: activate to sort column ascending"
                                             style="width: 66px;">Status</th>
-                                        <th class="dt-no-sorting sorting" tabindex="0" aria-controls="html5-extension"
+                                        <th class="dt-no-sorting sorting" tabindex="0" aria-controls="userTable"
                                             rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending"
                                             style="width:126px;">Action</th>
                                     </tr>
@@ -91,18 +91,6 @@
                                             </td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
-                                            {{-- <td>
-                                                @if ($user->role->permissions->count() > 0)
-                                                @foreach ($user->role->permissions as $key => $permission)
-                                                <span
-                                                    class="badge badge-success">{{ $permission->permission_name }}
-                                                </span>
-                                                @endforeach
-                                                @else
-                                                <span class="badge badge-info"> No permission found yet!
-                                                </span>
-                                                @endif
-                                            </td> --}}
                                             <td>
                                                 {{ $user->created_at->diffForHumans() }}
                                             </td>
@@ -174,7 +162,7 @@
     <script src="{{ asset('dashboard') }}/plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="{{ asset('dashboard') }}/plugins/table/datatable/button-ext/buttons.print.min.js"></script>
     <script>
-        $('#html5-extension').DataTable({
+        $('#userTable').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
                 "<'table-responsive'tr>" +
                 "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
