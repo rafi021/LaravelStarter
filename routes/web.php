@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\RoleControlller;
 use App\Http\Controllers\Backend\UserController;
@@ -50,6 +51,8 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::get('/profile/security', [ProfileController::class, 'changePassword'])->name('profle.password.change');
     Route::put('/profile/security/{user}', [ProfileController::class, 'updatePassword'])->name('profle.password.update');
 
+    // Pages
+    Route::resource('pages', PageController::class);
 
 });
 // Admin Panel Routes End

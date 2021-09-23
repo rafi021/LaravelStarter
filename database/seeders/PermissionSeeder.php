@@ -41,6 +41,13 @@ class PermissionSeeder extends Seeder
         'Password Show',
         'Password Update',
     ];
+
+    public $pagePermissionArray = [
+        'Page Index',
+        'Page Create',
+        'Page Edit',
+        'Page Delete',
+    ];
     /**
      * Run the database seeds.
      *
@@ -109,6 +116,19 @@ class PermissionSeeder extends Seeder
             'module_id' => $moduleAppProfile->id,
             'permission_name' => $this->profilePermissionArray[$i],
             'permission_slug' => 'app'.'.'.Str::slug($this->profilePermissionArray[$i]),
+            ]);
+        };
+
+        // Create Page Permissions
+        $moduleAppPage = Module::updateOrCreate([
+            'module_name' => 'Page Management',
+        ]);
+
+        for ($i=0; $i<count($this->profilePermissionArray) ; $i++) {
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppPage->id,
+            'permission_name' => $this->pagePermissionArray[$i],
+            'permission_slug' => 'app'.'.'.Str::slug($this->pagePermissionArray[$i]),
             ]);
         };
 
