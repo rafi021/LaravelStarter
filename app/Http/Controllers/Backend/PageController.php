@@ -64,7 +64,8 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        //
+        Gate::authorize('app.page-index');
+        return view('dashboard.PageBuilder.create', compact('page'));
     }
 
     /**

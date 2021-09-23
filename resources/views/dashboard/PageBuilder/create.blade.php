@@ -8,67 +8,60 @@
 @include('dashboard.inc.dashboard_breadcrumb', [
 'name' => 'Dashboard',
 'route_name' => 'home',
-'section_name' => 'User Form'
+'section_name' => 'Page Form'
 ])
 
 @section('dashboard_content')
     <div class="layout-px-spacing">
         <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                <form method="POST" action="{{ isset($user) ? route('users.update', $user) : route('users.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ isset($page) ? route('pages.update', $page) : route('pages.store') }}" enctype="multipart/form-data">
                     @csrf
-                    @isset($user)
+                    @isset($page)
                         @method('PUT')
                     @endisset
                     <div class="statbox widget box box-shadow">
                         <div class="card-header with-border d-flex justify-content-between align-items-center">
-                            <h3 class="card-title">User Form </h3>
-                            <a href="{{ route('users.index') }}" class="btn btn-primary">Back to User Table</a>
+                            <h3 class="card-title">Pages Form </h3>
+                            <a href="{{ route('pages.index') }}" class="btn btn-primary">Back to Pages Table</a>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group mb-4">
-                                    <label for="userName">User Name</label>
-                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                        id="userName" placeholder="e.g: Editor" value="{{ $user->name ?? old('name') }}"
+                                    <label for="pageTitle">Pages Title</label>
+                                    <input type="text" name="page_title" class="form-control @error('page_title') is-invalid @enderror"
+                                        id="pageTitle" placeholder="e.g: About us" value="{{ $page->page_title ?? old('page_title') }}"
                                         required>
-                                    @error('name')
+                                    @error('page_title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-
                                 <div class="form-group mb-4">
-                                    <label for="userEmail">User Email</label>
-                                    <input type="email" name="email"
-                                        class="form-control @error('email') is-invalid @enderror" id="userEmail"
-                                        placeholder="e.g: editor@gmail.com" value="{{ $user->email ?? old('email') }}"
+                                    <label for="pageslug">Pages slug</label>
+                                    <input type="text" name="page_slug" class="form-control @error('page_slug') is-invalid @enderror"
+                                        id="pageslug" placeholder="e.g: about-us-or-get-in-touch" value="{{ $page->page_slug ?? old('page_slug') }}"
                                         required>
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group mb-4">
-                                    <label for="userPassword">User Password</label>
-                                    <input type="password" name="password"
-                                        class="form-control @error('password') is-invalid @enderror" id="userPassword"
-                                        placeholder="e.g: Password" {{ !isset($user) ? 'required' : '' }}>
-                                    @error('password')
+                                    @error('page_slug')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                                 <div class="form-group mb-4">
-                                    <label for="confirmPassword">Confirm Password</label>
-                                    <input type="password" name="password_confirmation"
-                                        class="form-control @error('password') is-invalid @enderror" id="confirmPassword"
-                                        placeholder="e.g: Password" {{ !isset($user) ? 'required' : '' }}>
-                                    @error('password')
+                                    <label for="pageExcerpt">Excerpt/Short Description</label>
+                                    <textarea name="excerpt" id="pageExcerpt" cols="30" rows="10" class="form-control @error('excerpt') is-invalid @enderror" placeholder="Short Description">{{ $page->excerpt ?? old('excerpt') }}</textarea>
+                                    @error('excerpt')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="pageBody">Body/Long Description</label>
+                                    <textarea name="body" id="pageBody" cols="30" rows="10" class="form-control @error('body') is-invalid @enderror" placeholder="Long Description">{{ $page->body ?? old('body') }}</textarea>
+                                    @error('body')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -78,32 +71,44 @@
                             <div class="col-md-4">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Select Role and Status</h5>
+                                        <h5 class="card-title">SEO, Featured Image and Status</h5>
                                         <div class="form-group mb-4">
-                                            <label for="roleSelet">Select Role</label>
-                                            <select
-                                                class="custom-select roleSelect @error('role_name') is-invalid @enderror"
-                                                name="role_name" id="roleSelet">
-                                                @foreach ($roles as $key => $role)
-                                                    <option value="{{ $role->id }}" @isset($user) {{ $user->role->id == $role->id ? 'selected': '' }}
-                                                        @endisset>
-                                                        {{ $role->role_name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('role_name')
+                                            <label for="metaTitle">Meta Title</label>
+                                            <input type="text" name="meta_title" class="form-control @error('meta_title') is-invalid @enderror"
+                                                id="metaTitle" placeholder="e.g: meta-title" value="{{ $page->meta_title ?? old('meta_title') }}"
+                                                required>
+                                            @error('meta_title')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                         <div class="form-group mb-4">
-                                            <label for="userAvatar">Avatar</label>
-                                            <input type="file" name="avatar" id="userAvatar"
-                                                class="dropify form-control @error('avatar') is-invalid
-                                            @enderror" data-default-file="{{ isset($user) ? $user->getFirstMediaUrl('avatar') : ''}}"
-                                            {{ !isset($user) ? 'required' : '' }}>
-                                            @error('avatar')
+                                            <label for="metaKeywords">Meta Keywords</label>
+                                            <textarea name="meta_keywords" id="metaKeywords" cols="30" rows="10" class="form-control @error('meta_keywords') is-invalid @enderror" placeholder="Meta kewords with comma separation">{{ $page->meta_keywords ?? old('meta_keywords') }}
+                                            </textarea>
+                                            @error('meta_keywords')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="metaDescription">Meta Description</label>
+                                            <textarea name="meta_description" id="metaDescription" cols="30" rows="10" class="form-control @error('meta_description') is-invalid @enderror" placeholder="Short Description">{{ $page->meta_description ?? old('meta_description') }}</textarea>
+                                            @error('meta_description')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="pageImage">Page image</label>
+                                            <input type="file" name="page_image" id="pageImage"
+                                                class="dropify form-control @error('page_image') is-invalid
+                                            @enderror" data-default-file="{{ isset($page) ? $page->getFirstMediaUrl('page_image') : ''}}"
+                                            {{ !isset($page) ? 'required' : '' }}>
+                                            @error('page_image')
                                                 <span class="text-danger" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -115,11 +120,11 @@
                                                     class="custom-control-input @error('status')is-invalid
                                             @enderror"
                                                     id="customSwitch1" name="status"
-                                                    @isset($user)
-                                                    {{ $user->status == true ? 'checked': '' }}
+                                                    @isset($page)
+                                                    {{ $page->status == true ? 'checked': '' }}
                                                     @endisset
                                                     >
-                                                <label class="custom-control-label" for="customSwitch1">User Status</label>
+                                                <label class="custom-control-label" for="customSwitch1">page Status</label>
                                                 @error('status')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -131,11 +136,11 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn {{ isset($user) ? 'btn-warning' : 'btn-primary' }}">
-                            @isset($user)
-                                Update User
+                        <button type="submit" class="btn {{ isset($page) ? 'btn-warning' : 'btn-primary' }}">
+                            @isset($page)
+                                Update page
                             @else
-                                Add User
+                                Add page
                             @endisset
                         </button>
                         {{-- <input type="submit" name="time" class="btn btn-primary"> --}}
