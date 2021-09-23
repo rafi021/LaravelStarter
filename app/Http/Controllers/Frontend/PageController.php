@@ -11,7 +11,6 @@ class PageController extends Controller
     public function index($slug)
     {
         //return $slug;
-        $page = Page::findBySlug($slug);
-        return $page;
+        return $page = Page::findBySlug($slug);
     }
 }

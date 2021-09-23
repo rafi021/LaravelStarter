@@ -58,4 +58,4 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
 // Admin Panel Routes End
 
 // Always add to last route
-Route::get('{slug}',[FrontendPageController::class, 'index']);
+Route::get('{slug}',[FrontendPageController::class, 'index'])->name('frontend.page');
