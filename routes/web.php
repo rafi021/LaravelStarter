@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\RoleControlller;
@@ -54,6 +55,9 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
 
     // Pages
     Route::resource('pages', PageController::class);
+
+    //Menus routes
+    Route::resource('menus', MenuController::class);
 });
 // Admin Panel Routes End
 

@@ -48,6 +48,14 @@ class PermissionSeeder extends Seeder
         'Page Edit',
         'Page Delete',
     ];
+
+    public $menuPermissionArray = [
+        'Menu Access Builder',
+        'Menu Index',
+        'Menu Create',
+        'Menu Edit',
+        'Menu Delete',
+    ];
     /**
      * Run the database seeds.
      *
@@ -132,6 +140,18 @@ class PermissionSeeder extends Seeder
             ]);
         };
 
+        // Create Menu Permissions
+        $moduleAppmenu = Module::updateOrCreate([
+            'module_name' => 'menu Management',
+        ]);
+
+        for ($i=0; $i<count($this->profilePermissionArray) ; $i++) {
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppmenu->id,
+            'permission_name' => $this->menuPermissionArray[$i],
+            'permission_slug' => 'app'.'.'.Str::slug($this->menuPermissionArray[$i]),
+            ]);
+        };
 
     }
 }
