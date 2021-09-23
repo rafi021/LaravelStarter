@@ -68,7 +68,7 @@
                                             <td class="sorting_1">{{ $loop->index + 1 }}</td>
                                             <td>{{ $page->page_title }}</td>
                                             <td>
-                                                <a href="">{{ $page->page_slug }}</a>
+                                                <a href="{{ route('frontend.page', $page->page_slug) }}">{{ $page->page_slug }}</a>
                                             </td>
                                             <td>{{ $page->meta_title }}</td>
                                             <td>{{ $page->meta_keywords }}</td>
