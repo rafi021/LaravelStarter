@@ -63,13 +63,13 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::group(['as' => 'menus.', 'prefix' => 'menus/{id}'],function () {
         Route::get('builder', [MenuBuilderController::class, 'index'])->name('builder.page');
         Route::get('item/create', [MenuBuilderController::class, 'itemCreate'])->name('item.create');
-        Route::post('item/create', [MenuBuilderController::class, 'itemStore'])->name('item.store');
-        Route::get('item/edit/{item}', [MenuBuilderController::class, 'itemEdit'])->name('item.edit');
-        Route::put('item/update/{item}', [MenuBuilderController::class, 'itemUpdate'])->name('item.update');
-        Route::delete('item/delete/{item}', [MenuBuilderController::class, 'itemDelete'])->name('item.delete');
+        Route::post('item/store', [MenuBuilderController::class, 'itemStore'])->name('item.store');
+        Route::get('item/{itemId}/edit', [MenuBuilderController::class, 'itemEdit'])->name('item.edit');
+        Route::put('item/{itemId}/update', [MenuBuilderController::class, 'itemUpdate'])->name('item.update');
+        Route::delete('item/{itemId}/delete', [MenuBuilderController::class, 'itemDelete'])->name('item.delete');
     });
 });
-// Admin Panel Routes End
+// Admin Panel Routes Endhgfggjggh
 
 // Always add to last route
 Route::get('{slug}',[FrontendPageController::class, 'index'])->name('frontend.page');
