@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MenuStoreRequest;
+use App\Http\Requests\MenuUpdateRequest;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
@@ -38,9 +41,21 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MenuStoreRequest $request)
     {
-        //
+        Gate::authorize('app.menu-create');
+        Menu::create([
+            'name' =>Str::slug($request->input('name')),
+            'description' =>$request->input('description'),
+            'deletable' => true,
+        ]);
+
+        $notification = [
+            'alert_type' => 'Success',
+            'message' => 'Menu Created Successfully!!'
+        ];
+        notify()->success($notification['message'],$notification['alert_type'],"topRight");
+        return redirect()->route('menus.index')->with($notification);
     }
 
     /**
@@ -62,7 +77,8 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        //
+        Gate::authorize('app.menu-edit');
+        return view('dashboard.Menus.create', compact('menu'));
     }
 
     /**
@@ -72,9 +88,21 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Menu $menu)
+    public function update(MenuUpdateRequest $request, Menu $menu)
     {
-        //
+        Gate::authorize('app.menu-edit');
+        $menu->update([
+            'name' =>Str::slug($request->input('name')),
+            'description' =>$request->input('description'),
+            'deletable' => true,
+        ]);
+
+        $notification = [
+            'alert_type' => 'Success',
+            'message' => 'Menu Updated Successfully!!'
+        ];
+        notify()->info($notification['message'],$notification['alert_type'],"topRight");
+        return redirect()->route('menus.index')->with($notification);
     }
 
     /**
@@ -85,6 +113,23 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        Gate::authorize('app.menu-delete');
+        if($menu->deletable == true)
+        {
+            $menu->delete();
+            $notification = [
+                'alert_type' => 'Success',
+                'message' => 'Menu deleted successfully!!'
+            ];
+            notify()->info($notification['message'],$notification['alert_type'],"topRight");
+            return redirect()->route('menus.index')->with($notification);
+        }else{
+            $notification = [
+                'alert_type' => 'Danger',
+                'message' => "You can't delete this menu!!!"
+            ];
+            notify()->warning($notification['message'],$notification['alert_type'],"topRight");
+            return redirect()->route('menus.index')->with($notification);
+        }
     }
 }

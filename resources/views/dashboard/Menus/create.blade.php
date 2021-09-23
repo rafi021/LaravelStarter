@@ -1,8 +1,7 @@
 @extends('dashboard.layout.main_master')
 
 @push('dashboard_style')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
+
 @endpush
 
 @include('dashboard.inc.dashboard_breadcrumb', [
@@ -65,32 +64,5 @@
 @endsection
 
 @push('dashboard_script')
-<script src="https://cdn.tiny.cloud/1/t16hz3gmrg5wy8kzl0gpk0awtwljo6mf842n2b56z2o01g6r/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.roleSelect').select2();
-    });
-    $('.dropify').dropify();
-</script>
-<script>
-    tinymce.init({
-      selector: '#menuBody',
-      plugins: 'print preview paste importcss searchreplace autolink directionality code visualblocks visualchars image link media codesample table charmap hr menubreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
-        imagetools_cors_hosts: ['picsum.photos'],
-        toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | menubreak | charmap emoticons | preview | insertfile image media link anchor codesample | ltr rtl',
-        toolbar_sticky: true,
-        image_advtab: true,
-        content_css: '//www.tiny.cloud/css/codepen.min.css',
-        importcss_append: true,
-        height: 400,
-        image_caption: true,
-        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
-        noneditable_noneditable_class: "mceNonEditable",
-        toolbar_mode: 'sliding',
-        contextmenu: "link image imagetools table",
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Mahmud Ibrahim',
-   });
-  </script>
+
 @endpush
