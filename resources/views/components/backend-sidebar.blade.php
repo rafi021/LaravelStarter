@@ -12,7 +12,7 @@
                 </a>
             </li>
         @else
-        <li class="menu item">
+        {{-- <li class="menu item">
             <a href="#submenu-{{ $item->id }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <div class="">
                     <svg xmlns=" http://www.w3.org/2000/svg" width="24"
@@ -38,7 +38,7 @@
                     </li>
                 @endforeach
             </ul>
-        </li>
+        </li> --}}
         @endif
 
     @endif
