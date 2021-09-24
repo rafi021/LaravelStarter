@@ -61,6 +61,8 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::resource('menus', MenuController::class)->except('show');
 
     Route::group(['as' => 'menus.', 'prefix' => 'menus/{id}'],function () {
+        Route::post('order', [MenuBuilderController::class, 'order'])->name('order');
+
         Route::get('builder', [MenuBuilderController::class, 'index'])->name('builder.page');
         Route::get('item/create', [MenuBuilderController::class, 'itemCreate'])->name('item.create');
         Route::post('item/store', [MenuBuilderController::class, 'itemStore'])->name('item.store');
