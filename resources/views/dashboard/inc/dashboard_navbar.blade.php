@@ -18,7 +18,9 @@
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     {{ Auth::user()->name }}
-                    <img src="{{ Auth::user()->getFirstMediaUrl('avatar') }}" alt="avatar">
+                    <img src="{{ Auth::user()->getFirstMediaUrl('avatar')!= null ?
+                    Auth::user()->getFirstMediaUrl('avatar') :
+                    config('app.placeholder').'160.png' }}" alt="User Avatar" width="40">
                 </a>
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="">

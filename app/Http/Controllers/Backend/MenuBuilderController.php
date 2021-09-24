@@ -53,7 +53,7 @@ class MenuBuilderController extends Controller
     {
         Gate::authorize('app.menu-edit');
         $menu = Menu::findOrFail($id);
-        $menuItem = $menu->menuItems()->findOrFail($itemId);
+        $menuItem = MenuItem::where('menu_id',$menu->id)->findOrFail($itemId);
         return view('dashboard.Menus.MenuItems.create', compact('menu', 'menuItem'));
     }
 
@@ -61,7 +61,7 @@ class MenuBuilderController extends Controller
     {
         Gate::authorize('app.menu-edit');
         $menu = Menu::findOrFail($id);
-        $menuItem = $menu->menuItems()->findOrFail($itemId);
+        $menuItem = MenuItem::where('menu_id',$menu->id)->findOrFail($itemId);
         $menuItem->update([
             'type' => $request->input('type'),
             'title' => $request->input('title'),

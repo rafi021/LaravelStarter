@@ -14,6 +14,7 @@
 <script src="{{ asset('js/iziToast.js') }}"></script>
 
 <script src="{{ asset('js/script.js') }}"></script>
+<script src="https://kit.fontawesome.com/b31690c0ad.js" crossorigin="anonymous"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 @include('vendor.lara-izitoast.toast')
 
