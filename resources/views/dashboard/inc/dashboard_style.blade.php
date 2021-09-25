@@ -1,4 +1,4 @@
-<link rel="icon" type="image/x-icon" href="{{ asset('dashboard/assets/img/favicon.ico') }}" />
+<link rel="icon" type="image/x-icon" href="{{ Storage::url(setting('site_favicon')) }}" />
 <link href="{{ asset('dashboard/assets/css/loader.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ asset('dashboard/assets/js/loader.js') }}"></script>
 
