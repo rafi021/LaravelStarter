@@ -75,8 +75,12 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
         Route::get('general', [SettingController::class, 'general'])->name('general');
         Route::post('general', [SettingController::class, 'generalUpdate'])->name('general.update');
+
         Route::get('apperance', [SettingController::class, 'appearance'])->name('appearance.index');
         Route::post('apperance', [SettingController::class, 'appearanceUpdate'])->name('appearance.update');
+
+        Route::get('mail', [SettingController::class, 'mail'])->name('mail.index');
+        Route::post('mail', [SettingController::class, 'mailUpdate'])->name('mail.update');
 
     });
 });

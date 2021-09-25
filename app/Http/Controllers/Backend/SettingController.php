@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MailSettingUpdateRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -83,5 +84,54 @@ class SettingController extends Controller
 
     private function deleteOldlogo($path){
         Storage::disk('public')->delete(($path));
+    }
+
+    public function mail( )
+    {
+        return view('dashboard.Settings.mail');
+    }
+
+    public function mailUpdate(MailSettingUpdateRequest $request)
+    {
+        Setting::updateOrCreate(
+            ['name' => 'mail_mailer'],
+            ['value' => $request->input('mail_mailer')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'mail_encryption'],
+            ['value' => $request->input('mail_encryption')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'mail_host'],
+            ['value' => $request->input('mail_host')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'mail_port'],
+            ['value' => $request->input('mail_port')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'mail_username'],
+            ['value' => $request->input('mail_username')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'mail_password'],
+            ['value' => $request->input('mail_password')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'mail_from_address'],
+            ['value' => $request->input('mail_from_address')]
+        );
+
+         //update .env
+        Artisan::call("env:set MAIL_MAILER='".$request->input('mail_mailer')."' ");
+        Artisan::call("env:set MAIL_HOST='".$request->input('mail_host')."' ");
+        Artisan::call("env:set MAIL_PORT='".$request->input('mail_port')."' ");
+        Artisan::call("env:set MAIL_USERNAME='".$request->input('mail_username')."' ");
+        Artisan::call("env:set MAIL_PASSWORD='".$request->input('mail_password')."' ");
+        Artisan::call("env:set MAIL_ENCRYPTION='".$request->input('mail_encryption')."' ");
+        Artisan::call("env:set MAIL_FROM_ADDRESS='".$request->input('mail_from_address')."' ");
+
+        notify()->success('Mail Setting Updated', 'Success');
+        return back();
     }
 }
