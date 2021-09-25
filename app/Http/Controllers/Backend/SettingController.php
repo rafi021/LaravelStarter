@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -55,15 +56,32 @@ class SettingController extends Controller
             'site_favicon' => 'nullable|image',
         ]);
 
-        Setting::updateOrCreate(
-            ['name' => 'site_logo'],
-            ['value' => $request->input('site_logo')]
-        );
+        // Upload site logo by deleting old logo first
+        if($request->hasFile('site_logo')){
+            $this->deleteOldlogo(setting('site_logo'));
+            Setting::updateOrCreate(
+                ['name' => 'site_logo'],
+                ['value' => Storage::disk('public')->putFile('logos', $request->file('site_logo'))]
+            );
+        }
+
+         // Upload site favicon by deleting old favicon first
+        if($request->hasFile('site_favicon')){
+            $this->deleteOldlogo(setting('site_favicon'));
+            Setting::updateOrCreate(
+                ['name' => 'site_favicon'],
+                ['value' => Storage::disk('public')->putFile('logos', $request->file('site_favicon'))]
+            );
+        }
 
         //update .env
         //Artisan::call("env:set APP_NAME='".$request->input('site_logo')."' ");
 
-        notify()->success('Settings Updated', 'Success');
+        notify()->success('Apperance Updated', 'Success');
         return back();
+    }
+
+    private function deleteOldlogo($path){
+        Storage::disk('public')->delete(($path));
     }
 }
