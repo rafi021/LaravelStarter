@@ -1,13 +1,13 @@
 @extends('dashboard.layout.main_master')
 
 @push('dashboard_style')
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
 @endpush
 
 @include('dashboard.inc.dashboard_breadcrumb', [
 'name' => 'Dashboard',
 'route_name' => 'home',
-'section_name' => 'General Settings'
+'section_name' => 'Apperance Settings'
 ])
 
 @section('dashboard_content')
@@ -34,45 +34,36 @@
                             </div>
                         </div>
                         <!-- form start -->
-                        <form id="settingsFrom" autocomplete="off" role="form" method="POST" action="{{ route('settings.general.update') }}">
+                        <form id="settingsFrom" autocomplete="off" role="form" method="POST" action="{{ route('settings.appearance.update') }}" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <!-- general form elements -->
                             <div class="main-card mb-3 card">
                                 <div class="card-body">
-                                   <div class="form-group">
-                                        <label for="site_title">Site Title <code>{ key: site_title }</code></label>
-                                        <input type="text" name="site_title" id="site_title"
-                                               class="form-control @error('site_title') is-invalid @enderror"
-                                               value="{{ setting('site_title') ?? old('site_title') }}"
-                                               placeholder="Site Title">
-                                        @error('site_title')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+
+                                    <div class="form-group">
+                                        <label for="site_logo">Logo (Only Image are allowed) <code>{ key: site_logo }</code></label>
+                                        <input type="file" name="site_logo" id="site_logo"
+                                               class="dropify @error('site_logo') is-invalid @enderror"
+                                               data-default-file="{{ setting('site_logo') != null ?  Storage::url(setting('site_logo')) : '' }}">
+                                        @error('site_logo')
+                                            <span class="text-danger" role="alert">
+                                                 <strong>{{ $message }}</strong>
+                                             </span>
                                         @enderror
                                     </div>
-                                     <div class="form-group">
-                                         <label for="site_description">Site Description <code>{ key: site_description }</code></label>
-                                         <textarea name="site_description" id="site_description"
-                                                   class="form-control @error('site_description') is-invalid @enderror">{{ setting('site_description') ?? old('site_description') }}</textarea>
-                                         @error('site_description')
-                                         <span class="invalid-feedback" role="alert">
-                                             <strong>{{ $message }}</strong>
-                                         </span>
-                                         @enderror
-                                     </div>
 
-                                     <div class="form-group">
-                                         <label for="site_address">Site Address <code>{ key: site_address }</code></label>
-                                         <textarea name="site_address" id="site_address"
-                                                   class="form-control @error('site_address') is-invalid @enderror">{{ setting('site_address') ?? old('site_address') }}</textarea>
-                                         @error('site_address')
-                                         <span class="invalid-feedback" role="alert">
-                                             <strong>{{ $message }}</strong>
-                                         </span>
-                                         @enderror
-                                     </div>
+                                    <div class="form-group">
+                                        <label for="site_favicon">Favicon (Only Image are allowed, Size: 33 X 33) <code>{ key: site_favicon }</code></label>
+                                        <input type="file" name="site_favicon" id="site_favicon"
+                                               class="dropify @error('site_favicon') is-invalid @enderror"
+                                               data-default-file="{{ setting('site_favicon') != null ?  Storage::url(setting('site_favicon')) : '' }}">
+                                        @error('site_favicon')
+                                            <span class="text-danger" role="alert">
+                                                 <strong>{{ $message }}</strong>
+                                             </span>
+                                        @enderror
+                                    </div>
 
                                     <button type="button" class="btn btn-danger" onClick="resetForm('settingsFrom')">
                                         <i class="fas fa-redo"></i>
@@ -97,5 +88,8 @@
 @endsection
 
 @push('dashboard_script')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script>
+        $('.dropify').dropify();
+    </script>
 @endpush

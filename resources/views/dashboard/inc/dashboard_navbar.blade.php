@@ -8,7 +8,7 @@
                 </a>
             </li>
             <li class="nav-item theme-text">
-                <a href="{{ route('home') }}" class="nav-link"> CORK </a>
+                <a href="{{ route('home') }}" class="nav-link"> {{ env('APP_NAME') }} </a>
             </li>
         </ul>
 
