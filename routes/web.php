@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\RoleControlller;
+use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\PageController as FrontendPageController;
@@ -69,6 +70,11 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
         Route::get('item/{itemId}/edit', [MenuBuilderController::class, 'itemEdit'])->name('item.edit');
         Route::put('item/{itemId}/update', [MenuBuilderController::class, 'itemUpdate'])->name('item.update');
         Route::delete('item/{itemId}/delete', [MenuBuilderController::class, 'itemDelete'])->name('item.delete');
+    });
+
+    Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+        Route::get('general', [SettingController::class, 'general'])->name('general');
+        Route::post('general', [SettingController::class, 'generalUpdate'])->name('general.update');
     });
 });
 // Admin Panel Routes Endhgfggjggh
