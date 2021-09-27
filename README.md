@@ -28,6 +28,25 @@ For Debuging. I use
 3. User Management
 4. Profile Management
 5. Backend DB and Project File from Admin Dashboard
-6. Event Management
-7. TO-Do List Management 
-8. Note Management 
+6. Setting Management (General/Global, Apperance, Mail & Socialite)
+7. Dynamic Menu Builder (Drag and Drop Menu Builder)
+8. Page Management (frontend page builder)
+
+
+## Getting Started Step by Step
+1. In your root folder, clone the project file using git clone https://github.com/rafi021/LaravelStarter.git
+2. Open terminal(bash/cmd), Then cd LaravelStarter folder. (go to project folder)
+3. then install required files and libaries using "composer install"
+4. the cp .env.example .env [create a .env file for project]
+5. then run command "php artisan key:generate" 
+5. Create a database in MYSQL and connect it with your project via updating .env file.
+6. After connecting the db with project, then run command "php artisan migrate::fresh --seed"
+
+After completing the migration and seeding of db, you will have 2 users ready for login in this project.
+
+A. Admin User
+    email: admin@gmail.com
+    pass: 12345678
+B. Normal User
+    email: user@gmail.com
+    pass: 12345678
