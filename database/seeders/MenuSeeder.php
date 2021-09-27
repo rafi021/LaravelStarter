@@ -87,13 +87,13 @@ class MenuSeeder extends Seeder
             'icon_class' => 'far fa-cloud'
         ]);
 
-        // $backendSideBar->menuItems()->updateOrCreate([
-        //     'type' => 'item',
-        //     'order' => 8,
-        //     'title' => 'Settings',
-        //     'url' =>'settings.index',
-        //     'icon_class' => 'far fa-settings'
-        // ]);
+        $backendSideBar->menuItems()->updateOrCreate([
+            'type' => 'item',
+            'order' => 10,
+            'title' => 'Settings',
+            'url' =>'settings.general',
+            'icon_class' => 'far fa-settings'
+        ]);
 
     }
 }
