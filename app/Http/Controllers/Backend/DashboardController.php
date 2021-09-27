@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
@@ -20,8 +22,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        Gate::authorize('app.access-dashboard'); // authorize admin to access/give access to Admin Dashboard
-        return view('dashboard.pages.home');
+        // authorize admin to access/give access to Admin Dashboard
+        Gate::authorize('app.access-dashboard');
+        $data['usersCount'] = DB::table('users')->count();
+        $data['rolesCount'] = DB::table('roles')->count();
+        $data['pagesCount'] = DB::table('pages')->count();
+        // $data['users'] = DB::table('users')->orderByDesc('created_at')->take(10)->get();
+        $users = User::with('role')->orderBy('created_at')->take(10)->get();
+        return view('dashboard.pages.home', $data, compact('users'));
     }
 
     /**

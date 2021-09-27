@@ -150,14 +150,14 @@ class UserController extends Controller
                 'message' => 'User Deleted Successfully!!'
             ];
             notify()->success($notification['message'],$notification['alert_type'],"topRight");
-            return redirect()->route('users.index')->with($notification);
+            return back()->with($notification);
         }else{
             $notification = [
                 'alert_type' => 'Danger',
                 'message' => "you can't delete system User"
             ];
             notify()->error($notification['message'],$notification['alert_type'],"topRight");
-            return redirect()->route('users.index')->with($notification);
+            return back()->with($notification);
         }
     }
 }
