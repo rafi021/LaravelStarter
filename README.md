@@ -40,7 +40,7 @@ For Debuging. I use
 4. the cp .env.example .env [create a .env file for project]
 5. then run command "php artisan key:generate" 
 5. Create a database in MYSQL and connect it with your project via updating .env file.
-6. After connecting the db with project, then run command "php artisan migrate::fresh --seed"
+6. After connecting the db with project, then run command "php artisan migrate:fresh --seed"
 
 After completing the migration and seeding of db, you will have 2 users ready for login in this project.
 
