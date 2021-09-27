@@ -46,7 +46,7 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    
+
     public function registerMediaCollections():void
     {
         $this->addMediaCollection('avatar')
@@ -55,7 +55,7 @@ class User extends Authenticatable implements HasMedia
 
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class)->withDefault();
     }
 
     public function hasPermission($permission_slug)

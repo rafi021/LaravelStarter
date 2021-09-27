@@ -13,7 +13,7 @@ class MenuItem extends Model
 
     public function menu()
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(Menu::class)->withDefault();
     }
 
     public function childs()
@@ -23,6 +23,6 @@ class MenuItem extends Model
 
     public function parent()
     {
-        return $this->belongsTo(MenuItem::class, 'parent_id','id');
+        return $this->belongsTo(MenuItem::class, 'parent_id','id')->withDefault();
     }
 }

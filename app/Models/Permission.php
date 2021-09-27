@@ -16,11 +16,11 @@ class Permission extends Model
 
     public function module()
     {
-        return $this->belongsTo(Module::class);
+        return $this->belongsTo(Module::class)->withDefault();
     }
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class)->withPivot('role_id');
     }
 }

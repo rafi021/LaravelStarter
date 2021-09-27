@@ -13,7 +13,7 @@ class Setting extends Model
 
     public static function getByName($name, $deafult = null)
     {
-       $setting = self::where('name', $name)->first();
+       $setting = self::whereName($name)->first();
        if(isset($setting)){
            return $setting->value;
        }else{
