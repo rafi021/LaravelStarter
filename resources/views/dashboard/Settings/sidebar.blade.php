@@ -8,7 +8,7 @@
     <a href="{{ route('settings.mail.index') }}" class="list-group-item list-group-item-action {{ Route::is('settings.mail.index') ? 'active' : ''  }}">
         Mail
     </a>
-    {{-- <a href="{{ route('settings.socialite.index') }}" class="list-group-item list-group-item-action {{ Route::is('settings.socialite.index') ? 'active' : ''  }}">
+    <a href="{{ route('settings.socialite.index') }}" class="list-group-item list-group-item-action {{ Route::is('settings.socialite.index') ? 'active' : ''  }}">
         Socialite
-    </a> --}}
+    </a>
 </div>

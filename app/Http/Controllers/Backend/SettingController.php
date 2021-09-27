@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MailSettingUpdateRequest;
+use App\Http\Requests\SocialiteUpdateRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -130,6 +131,49 @@ class SettingController extends Controller
         Artisan::call("env:set MAIL_PASSWORD='".$request->input('mail_password')."' ");
         Artisan::call("env:set MAIL_ENCRYPTION='".$request->input('mail_encryption')."' ");
         Artisan::call("env:set MAIL_FROM_ADDRESS='".$request->input('mail_from_address')."' ");
+
+        notify()->success('Mail Setting Updated', 'Success');
+        return back();
+    }
+
+    public function socialite()
+    {
+        return view('dashboard.Settings.socialite');
+    }
+
+    public function socialiteUpdate(SocialiteUpdateRequest $request)
+    {
+        Setting::updateOrCreate(
+            ['name' => 'github_client_id'],
+            ['value' => $request->input('github_client_id')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'github_secret'],
+            ['value' => $request->input('github_secret')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'github_callback_url'],
+            ['value' => $request->input('github_callback_url')]
+        );
+        Artisan::call("env:set GITHUB_CLIENT_ID='".$request->input('github_client_id')."' ");
+        Artisan::call("env:set GITHUB_CLIENT_SECRET='".$request->input('github_secret')."' ");
+        Artisan::call("env:set GITHUB_REDIRECT='".$request->input('github_callback_url')."' ");
+
+        Setting::updateOrCreate(
+            ['name' => 'google_client_id'],
+            ['value' => $request->input('google_client_id')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'google_secret'],
+            ['value' => $request->input('google_secret')]
+        );
+        Setting::updateOrCreate(
+            ['name' => 'google_callback_url'],
+            ['value' => $request->input('google_callback_url')]
+        );
+        Artisan::call("env:set GOOGLE_CLIENT_ID='".$request->input('google_client_id')."' ");
+        Artisan::call("env:set GOOGLE_CLIENT_SECRET='".$request->input('google_secret')."' ");
+        Artisan::call("env:set GOOGLE_REDIRECT='".$request->input('google_callback_url')."' ");
 
         notify()->success('Mail Setting Updated', 'Success');
         return back();

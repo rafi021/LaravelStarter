@@ -86,6 +86,8 @@ Route::prefix('admin')->middleware(['auth',])->group(function () {
         Route::get('mail', [SettingController::class, 'mail'])->name('mail.index');
         Route::post('mail', [SettingController::class, 'mailUpdate'])->name('mail.update');
 
+        Route::get('socialite', [SettingController::class, 'socialite'])->name('socialite.index');
+        Route::post('socialite', [SettingController::class, 'socialiteUpdate'])->name('socialite.update');
     });
 });
 // Admin Panel Routes Endhgfggjggh
