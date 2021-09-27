@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\MenuBuilderController;
@@ -34,7 +35,10 @@ Route::get('/', [FrontendController::class, 'index'])->name('frontend');
 
 // Admin Panel Routes Start
 Auth::routes();
-
+Route::group(['as' =>'login.', 'prefix' => 'login'], function(){
+    Route::get('/{provider}',[LoginController::class, 'redirectToProvider'])->name('login.provider');
+    Route::get('/{provider}/callback',[LoginController::class, 'handleProviderCallback'])->name('login.callback');
+});
 
 Route::prefix('admin')->middleware(['auth',])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
