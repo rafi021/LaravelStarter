@@ -175,7 +175,7 @@ class SettingController extends Controller
         Artisan::call("env:set GOOGLE_CLIENT_SECRET='".$request->input('google_secret')."' ");
         Artisan::call("env:set GOOGLE_REDIRECT='".$request->input('google_callback_url')."' ");
 
-        notify()->success('Mail Setting Updated', 'Success');
+        notify()->success('Socialite Setting Updated', 'Success');
         return back();
     }
 }
